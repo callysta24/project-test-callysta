@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ideas Page</title>
+  <link rel="stylesheet" href="assets/index.css">
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <a href="/">
+        <img src="page/assets/img/logo_suitmedia.png" alt="Logo" />
+      </a>
+    </div>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#ideas" class="active">Ideas</a>
+      <a href="#careers">Careers</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+  
+  <div class="banner">
+    <h1>Ideas</h1>
+    <p>Where all our great things begin</p>
+  </div>
+
+<div class="container">
+  <!-- Filter section -->
+  <div class="filters">
+    <label>
+      Show per page:
+      <select id="itemsPerPage">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+      </select>
+    </label>
+
+    <label>
+      Sort by:
+      <select id="sortBy">
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+      </select>
+    </label>
+  </div>
+
+  <!-- Posts container -->
+  <div id="posts" class="posts"></div>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <a href="#">&laquo;</a>
+    <a href="#" class="active">1</a>
+    <a href="#">2</a>
+    <a href="#">3</a>
+    <a href="#">&raquo;</a>
+  </div>
+</div>
+
+
+  <script>
+    // Header hide/show on scroll
+    let lastScrollTop = 0;
+    const header = document.querySelector('header');
+    window.addEventListener('scroll', () => {
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+      // Show or hide header based on scroll direction
+      if (scrollTop > lastScrollTop) {
+        header.classList.add('hidden'); 
+      } else {
+        header.classList.remove('hidden'); 
+      }
+
+      // Change header background transparency based on scroll position
+      if (scrollTop > 50) {
+        header.classList.add('transparent');
+      } else {
+        header.classList.remove('transparent');
+      }
+
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; 
+    });
+
+    // Sort and show per page functionality
+    const itemsPerPageSelect = document.getElementById('itemsPerPage');
+    const sortBySelect = document.getElementById('sortBy');
+
+    // Handle items per page change
+    itemsPerPageSelect.addEventListener('change', () => {
+      console.log(`Show ${itemsPerPageSelect.value} items per page`);
+      // Implement logic to update state and refresh the content here
+      updateItemsPerPage(itemsPerPageSelect.value);
+    });
+
+    // Handle sort by change
+    sortBySelect.addEventListener('change', () => {
+      console.log(`Sort by ${sortBySelect.value}`);
+      // Implement logic to update the sorting of items here
+      sortItems(sortBySelect.value);
+    });
+
+    function updateItemsPerPage(itemsPerPage) {
+      // Add logic to update items per page, e.g., load new data or re-render the page
+      console.log(`Items per page updated to: ${itemsPerPage}`);
+    }
+
+    function sortItems(sortOption) {
+      // Add logic to handle sorting of items based on the selected sort option
+      console.log(`Sorting items by: ${sortOption}`);
+    }
+    </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const lazyImages = document.querySelectorAll("img.lazy");
+  
+      const lazyLoad = (image) => {
+        image.src = image.dataset.src;
+        image.classList.remove("lazy");
+      };
+  
+      const intersectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            lazyLoad(entry.target);
+            intersectionObserver.unobserve(entry.target);
+          }
+        });
+      });
+  
+      lazyImages.forEach((img) => intersectionObserver.observe(img));
+    });
+  </script>
+
+  <script src="assets/api.js"></script>
+</body>
+</html>
